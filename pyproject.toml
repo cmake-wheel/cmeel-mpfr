@@ -1,0 +1,21 @@
+[build-system]
+build-backend = "cmeel.build"
+requires = ["cmeel[build]", "cmeel-gmp", "cmeel-texinfo"]
+
+[project]
+description = "cmeel distribution for MPFR"
+license = "LGPL-3.0-or-later"
+name = "cmeel-mpfr"
+requires-python = ">= 3.8"
+version = "4.2.0"
+
+[project.urls]
+homepage = "https://github.com/cmake-wheel/cmeel-mpfr"
+repository = "https://github.com/cmake-wheel/cmeel-mpfr.git"
+
+[tool.cmeel]
+py3-none = true
+run-tests = false
+
+[tool.tomlsort]
+all = true
