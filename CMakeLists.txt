@@ -10,8 +10,11 @@ pkg_check_modules(GMP gmp)
 
 if(APPLE)
   set(ORIGIN "@loader_path")
+  set(TEST_COMMAND "")
 else()
   set(ORIGIN "\$\$ORIGIN")
+  set(TEST_COMMAND ${CMAKE_COMMAND} "-E" "env"
+                   "LD_LIBRARY_PATH=${GMP_PREFIX}/lib" "--" "make" "check")
 endif()
 
 include(ExternalProject)
@@ -24,8 +27,7 @@ ExternalProject_Add(
     ${CMAKE_COMMAND} "-E" "env" "LDFLAGS=-Wl,-rpath,'${ORIGIN}/../lib'" "--"
     "./configure" "--prefix=${CMAKE_INSTALL_PREFIX}" "--with-gmp=${GMP_PREFIX}"
   BUILD_COMMAND "make"
-  TEST_COMMAND ${CMAKE_COMMAND} "-E" "env" "LD_LIBRARY_PATH=${GMP_PREFIX}/lib"
-               "--" "make" "check"
+  TEST_COMMAND ${TEST_COMMAND}
   INSTALL_COMMAND "make" "install"
   COMMAND "${CMAKE_COMMAND}" "-E" "rm"
           "${CMAKE_INSTALL_PREFIX}/lib/lib${NAME}.la")
