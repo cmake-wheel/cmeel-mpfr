@@ -10,7 +10,8 @@ pkg_check_modules(GMP gmp)
 
 if(APPLE)
   set(ORIGIN "@loader_path")
-  set(TEST_COMMAND "")
+  set(TEST_COMMAND ${CMAKE_COMMAND} "-E" "env"
+                   "DYLD_LIBRARY_PATH=${GMP_PREFIX}/lib" "--" "make" "check")
 else()
   set(ORIGIN "\$\$ORIGIN")
   set(TEST_COMMAND ${CMAKE_COMMAND} "-E" "env"
