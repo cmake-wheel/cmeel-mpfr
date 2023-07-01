@@ -10,11 +10,12 @@ pkg_check_modules(GMP gmp)
 
 include(ExternalProject)
 ExternalProject_Add(
-    ${NAME}
+  ${NAME}
   URL "https://www.mpfr.org/mpfr-current/${NAME}-${VERSION}.tar.xz"
-  DOWNLOAD_EXTRACT_TIMESTAMP OFF
+      DOWNLOAD_EXTRACT_TIMESTAMP OFF
   BUILD_IN_SOURCE ON
-  CONFIGURE_COMMAND "./configure" "--prefix=${CMAKE_INSTALL_PREFIX}" "--with-gmp=${GMP_PREFIX}"
+  CONFIGURE_COMMAND "./configure" "--prefix=${CMAKE_INSTALL_PREFIX}"
+                    "--with-gmp=${GMP_PREFIX}"
   BUILD_COMMAND "make"
   TEST_COMMAND "make" "check"
   INSTALL_COMMAND "make" "install")

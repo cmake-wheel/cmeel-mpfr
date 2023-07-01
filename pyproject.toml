@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "cmeel.build"
-requires = ["cmeel[build]", "cmeel-gmp", "cmeel-texinfo"]
+requires = ["cmeel-gmp", "cmeel-texinfo", "cmeel[build]"]
 
 [project]
 description = "cmeel distribution for MPFR"
