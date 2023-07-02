@@ -6,7 +6,7 @@ set(VERSION 4.2.0)
 project(cmeel-${NAME} VERSION ${VERSION})
 
 include(FindPkgConfig)
-pkg_check_modules(GMP gmp)
+pkg_check_modules(GMP REQUIRED gmp)
 
 if(APPLE)
   set(ORIGIN "@loader_path")
