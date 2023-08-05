@@ -1,5 +1,5 @@
 [build-system]
-build-backend = "cmeel.build"
+build-backend = "cmeel"
 requires = ["cmeel-gmp", "cmeel-texinfo", "cmeel[build]"]
 
 [project]
