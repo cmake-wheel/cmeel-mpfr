@@ -12,6 +12,7 @@ version = "4.2.1"
 [project.urls]
 homepage = "https://github.com/cmake-wheel/cmeel-mpfr"
 repository = "https://github.com/cmake-wheel/cmeel-mpfr.git"
+upstream = "https://www.mpfr.org/"
 
 [tool.cmeel]
 build-number = 1
