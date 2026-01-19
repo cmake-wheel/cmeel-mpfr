@@ -1,34 +1,35 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.20)
 
-set(ORG coin-or)
-set(NAME CoinUtils)
-set(VERSION "2.11.12")
-set(EXT tar.gz)
-set(SHA256 eef1785d78639b228ae2de26b334129fe6a7d399c4ac6f8fc5bb9054ba00de64)
-set(TAG_PREFIX releases/)
+set(NAME mpfr)
+set(VERSION 4.2.1)
 
-project("cmeel-${NAME}" VERSION ${VERSION})
+project(cmeel-${NAME} VERSION ${VERSION})
 
-if(DEFINED ENV{CMEEL_JOBS})
-  set(CMEEL_JOBS
-      $ENV{CMEEL_JOBS}
-      CACHE STRING "number of build jobs" FORCE)
+include(FindPkgConfig)
+pkg_check_modules(GMP REQUIRED gmp)
+
+if(APPLE)
+  set(ORIGIN "@loader_path")
+  set(TEST_COMMAND ${CMAKE_COMMAND} "-E" "env"
+                   "DYLD_LIBRARY_PATH=${GMP_PREFIX}/lib" "--" "make" "check")
 else()
-  set(CMEEL_JOBS
-      4
-      CACHE STRING "number of build jobs")
+  set(ORIGIN "\$\$ORIGIN")
+  set(TEST_COMMAND ${CMAKE_COMMAND} "-E" "env"
+                   "LD_LIBRARY_PATH=${GMP_PREFIX}/lib" "--" "make" "check")
 endif()
 
 include(ExternalProject)
 ExternalProject_Add(
   ${NAME}
-  URL "https://github.com/${ORG}/${NAME}/archive/refs/tags/${TAG_PREFIX}${VERSION}.${EXT}"
-  URL_HASH "SHA256=${SHA256}"
+  URL "https://www.mpfr.org/mpfr-current/${NAME}-${VERSION}.tar.xz"
+  URL_HASH "SHA1=31ffb4244cb469e2b4937cce1f50150300971dfb"
   DOWNLOAD_EXTRACT_TIMESTAMP OFF
   BUILD_IN_SOURCE ON
-  CONFIGURE_COMMAND "./configure" "--prefix=${CMAKE_INSTALL_PREFIX}"
-  BUILD_COMMAND "make" "-j${CMEEL_JOBS}"
-  TEST_COMMAND "make" "check"
+  CONFIGURE_COMMAND
+    ${CMAKE_COMMAND} "-E" "env" "LDFLAGS=-Wl,-rpath,'${ORIGIN}/../lib'" "--"
+    "./configure" "--prefix=${CMAKE_INSTALL_PREFIX}" "--with-gmp=${GMP_PREFIX}"
+  BUILD_COMMAND "make"
+  TEST_COMMAND ${TEST_COMMAND}
   INSTALL_COMMAND "make" "install"
   COMMAND "${CMAKE_COMMAND}" "-E" "rm"
           "${CMAKE_INSTALL_PREFIX}/lib/lib${NAME}.la")
