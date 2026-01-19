@@ -7,7 +7,7 @@ description = "cmeel distribution for MPFR"
 license = "LGPL-3.0-or-later"
 name = "cmeel-mpfr"
 requires-python = ">= 3.10"
-version = "4.2.1"
+version = "4.2.2"
 
 [project.urls]
 homepage = "https://github.com/cmake-wheel/cmeel-mpfr"
@@ -15,7 +15,6 @@ repository = "https://github.com/cmake-wheel/cmeel-mpfr.git"
 upstream = "https://www.mpfr.org/"
 
 [tool.cmeel]
-build-number = 1
 has-sitelib = false
 run-tests = false
 
