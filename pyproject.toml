@@ -6,7 +6,7 @@ requires = ["cmeel-automake", "cmeel-gmp", "cmeel-texinfo", "cmeel[build]"]
 description = "cmeel distribution for MPFR"
 license = "LGPL-3.0-or-later"
 name = "cmeel-mpfr"
-requires-python = ">= 3.8"
+requires-python = ">= 3.10"
 version = "4.2.1"
 
 [project.urls]
